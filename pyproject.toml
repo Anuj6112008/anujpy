@@ -5,17 +5,27 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "anujpy"
 version = "0.1.0"
-description = "Advanced utility toolkit for Python"
+description = "Advanced utility toolkit for Python developers"
 readme = "README.md"
-authors = [{name = "PyAnuj"}]
+authors = [
+    {name = "PyAnuj"}
+]
 license = {text = "MIT"}
-classifiers = ["Programming Language :: Python :: 3"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+keywords = ["utilities", "tools", "python"]
 requires-python = ">=3.7"
-dependencies = ["httpx>=0.24.0", "requests>=2.28.0"]
+dependencies = [
+    "httpx>=0.24.0",
+    "requests>=2.28.0"
+]
 
 [project.urls]
-Homepage = "https://github.com/py-anuj/anujpy"
-Repository = "https://github.com/py-anuj/anujpy"
+Homepage = "https://github.com/Anuj6112008/anujpy"
+Repository = "https://github.com/Anuj6112008/anujpy.git"
 
 [tool.setuptools.packages.find]
 where = ["."]
