@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "anujpy"
+version = "0.1.0"
+description = "Advanced utility toolkit for Python"
+readme = "README.md"
+authors = [{name = "PyAnuj"}]
+license = {text = "MIT"}
+classifiers = ["Programming Language :: Python :: 3"]
+requires-python = ">=3.7"
+dependencies = ["httpx>=0.24.0", "requests>=2.28.0"]
+
+[project.urls]
+Homepage = "https://github.com/py-anuj/anujpy"
+Repository = "https://github.com/py-anuj/anujpy"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["anujpy*"]
