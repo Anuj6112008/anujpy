@@ -12,7 +12,7 @@ import time
 import requests
 import re
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 class AnujPy:
     def __init__(self):
@@ -23,8 +23,43 @@ class AnujPy:
             'white': '\033[97m', 'reset': '\033[0m',
             'bold': '\033[1m',
         }
-    
-    # ========== EXISTING FUNCTIONS ==========
+        
+        self.LANGUAGES = [
+            'azertyuiopmlkjhgfdsqwxcvbn', 'azertyuiopmlkjhgfdsqwxcvbn',
+            'azertyuiopmlkjhgfdsqwxcvbn', 'azertyuiopmlkjhgfdsqwxcvbn',
+            'azertyuiopmlkjhgfdsqwxcvbn',
+            'abcdefghijklmnopqrstuvwxyzéèêëàâäôùûüîïç',
+            'abcdefghijklmnopqrstuvwxyzéèêëàâäôùûüîïç',
+            'abcdefghijklmnopqrstuvwxyzéèêëàâäôùûüîïç',
+            'abcdefghijklmnopqrstuvwxyzñ',
+            'abcdefghijklmnopqrstuvwxyzñ',
+            'abcdefghijklmnopqrstuvwxyzñ',
+            'абвгдеёжзийклмнопрстуфхцчшщъыьэюя',
+            'абвгдеёжзийклмнопрстуфхцчшщъыьэюя',
+            'абвгдеёжзийклмнопрстуфхцчшщъыьэюя',
+            '的一是不了人我在有他这为之大来以个中上们到说时国和地要就出会可也你对生能而子那得于着下自之',
+            '的一是不了人我在有他这为之大来以个中上们到说时国和地要就出会可也你对生能而子那得于着下自之',
+            '的一是不了人我在有他这为之大来以个中上们到说时国和地要就出会可也你对生能而子那得于着下自之',
+            'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン',
+            'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン',
+            'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん',
+            'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん',
+            'אבגדהוזחטיכלמנסעפצקרשת',
+            'אבגדהוזחטיכלמנסעפצקרשת',
+            'دجحخهعغفقثصضشسيبلاتنمكطظزوةيارؤءئ',
+            'دجحخهعغفقثصضشسيبلاتنمكطظزوةيارؤءئ',
+            'αβγδεζηθικλμνξοπρστυφχψω',
+            'αβγδεζηθικλμνξοπρστυφχψω',
+            'abcdefghijklmnopqrstuvwxyzç',
+            'abcdefghijklmnopqrstuvwxyzç',
+            'กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรฤฤลฦวศษสหฬอฮ',
+            'กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรฤฤลฦวศษสหฬอฮ',
+            'अआइईउऊऋएऐओऔअंअःकखगघङचछजझञटठडढणतथदधनपफबभमयरलवशषसहक्षत्रज्ञ',
+            'अआइईउऊऋएऐओऔअंअःकखगघङचछजझञटठडढणतथदधनपफबभमयरलवशषसहक्षत्रज्ञ',
+        ]
+        
+        self.USERNAME_CHARS = '1234567890qwertyuiopasdfghjklzxcvbnm.'
+        self.NUMBER_POOL = '6789'
     
     def random_user_agent(self):
         agents = [
@@ -68,27 +103,49 @@ class AnujPy:
 """
         print(self.colored(banner, 'cyan'))
     
-    # ========== ADDITIONAL UTILITY FUNCTIONS ==========
-    
     def generate_username(self, lang_list=None):
-        """Generate random username using language sets"""
         if lang_list is None:
-            lang_list = [
-                'azertyuiopmlkjhgfdsqwxcvbn',
-                'abcdefghijklmnopqrstuvwxyzéèêëàâäôùûüîïç',
-                'абвгдеёжзийклмнопрстуфхцчшщъыьэюя',
-                '的一是不了人我在有他这为之大来以个中上们到说时国和地要就出会可也你对生能而子那得于着下自之',
-            ]
-        cl = '1234567890qwertyuiopasdfghjklzxcvbnm.'
-        num = '6789'
+            lang_list = self.LANGUAGES
+        cl = self.USERNAME_CHARS
+        num = self.NUMBER_POOL
         kew = random.choice(lang_list)
         keyword = ''.join(random.choice(kew) for _ in range(random.randrange(3, 15)))
         rng = int(random.choice(num))
         name = ''.join(random.choice(cl) for _ in range(rng))
         return random.choice([keyword, name])
     
+    def generate_instagram_style_username(self):
+        use_numbers = random.random() < 0.7
+        selected_lang = random.choice(self.LANGUAGES)
+        keyword_length = random.randrange(4, 13)
+        keyword = ''.join(random.choice(selected_lang) for _ in range(keyword_length))
+        if use_numbers:
+            num_length = random.randrange(2, 7)
+            number_part = ''.join(str(random.randint(6, 9)) if random.random() > 0.3 
+                                 else str(random.randint(0, 5)) 
+                                 for _ in range(num_length))
+            return keyword + number_part
+        else:
+            return keyword
+    
+    def generate_usernames_batch(self, count=10, style='instagram'):
+        usernames = []
+        for _ in range(count):
+            if style == 'instagram':
+                usernames.append(self.generate_instagram_style_username())
+            else:
+                usernames.append(self.generate_username())
+        return usernames
+    
+    def get_language_stats(self):
+        stats = {
+            'total_entries': len(self.LANGUAGES),
+            'unique_languages': len(set(self.LANGUAGES)),
+            'languages': list(set(self.LANGUAGES))[:5]
+        }
+        return stats
+    
     def estimate_year_from_id(self, user_id):
-        """Estimate account creation year from user ID"""
         try:
             uid = int(user_id)
             if 1 < uid <= 1278889: return 2010
@@ -110,7 +167,6 @@ class AnujPy:
             return 'N/A'
     
     def get_google_auth(self):
-        """Get Google authentication token"""
         try:
             alphabet = 'azertyuiopmlkjhgfdsqwxcvbn'
             n1 = ''.join(random.choice(alphabet) for _ in range(random.randrange(6, 9)))
@@ -171,7 +227,6 @@ class AnujPy:
             return False
     
     def verify_gmail(self, email):
-        """Check Gmail availability"""
         try:
             if '@' in email:
                 email = email.split('@')[0]
@@ -213,7 +268,6 @@ class AnujPy:
             return False
     
     def get_instagram_profile(self, user_id=None):
-        """Fetch Instagram profile via GraphQL"""
         if user_id is None:
             user_id = random.randrange(10000, 21254029834)
         
@@ -234,15 +288,16 @@ class AnujPy:
         except:
             return {}
 
-# Create instance
 anuj = AnujPy()
 
-# Export all functions
 random_user_agent = anuj.random_user_agent
 random_string = anuj.random_string
 random_number = anuj.random_number
 get_client = anuj.get_client
 generate_username = anuj.generate_username
+generate_instagram_style = anuj.generate_instagram_style_username
+generate_batch = anuj.generate_usernames_batch
+get_language_stats = anuj.get_language_stats
 estimate_year = anuj.estimate_year_from_id
 get_google_auth = anuj.get_google_auth
 verify_gmail = anuj.verify_gmail
@@ -251,6 +306,7 @@ get_instagram_profile = anuj.get_instagram_profile
 __all__ = [
     'AnujPy', 'anuj',
     'random_user_agent', 'random_string', 'random_number',
-    'get_client', 'generate_username', 'estimate_year',
+    'get_client', 'generate_username', 'generate_instagram_style',
+    'generate_batch', 'get_language_stats', 'estimate_year',
     'get_google_auth', 'verify_gmail', 'get_instagram_profile'
 ]
