@@ -11,6 +11,7 @@ import sys
 import time
 import requests
 import re
+from .instagram import InstagramUtils
 
 __version__ = "0.3.0"
 
