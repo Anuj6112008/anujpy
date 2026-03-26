@@ -11,9 +11,10 @@ import sys
 import time
 import requests
 import re
+import json
 from .instagram import InstagramUtils
 
-__version__ = "0.3.0"
+__version__ = "0.3.1"  # Version updated
 
 class AnujPy:
     def __init__(self):
@@ -288,9 +289,36 @@ class AnujPy:
             return response.json().get('data', {}).get('user', {})
         except:
             return {}
+    
+    # New Instagram Utility Methods
+    def instagram_check_email(self, mail):
+        """
+        Check if an email is registered on Instagram
+        
+        Args:
+            mail (str): Email address to check
+            
+        Returns:
+            bool: True if email is registered, False otherwise
+        """
+        return InstagramUtils.check_email(mail)
+    
+    def instagram_reset_info(self, username):
+        """
+        Get password reset information for an Instagram account
+        
+        Args:
+            username (str): Instagram username
+            
+        Returns:
+            str: Reset status message
+        """
+        return InstagramUtils.get_reset_info(username)
 
+# Create instance
 anuj = AnujPy()
 
+# Export functions from AnujPy class
 random_user_agent = anuj.random_user_agent
 random_string = anuj.random_string
 random_number = anuj.random_number
@@ -304,10 +332,19 @@ get_google_auth = anuj.get_google_auth
 verify_gmail = anuj.verify_gmail
 get_instagram_profile = anuj.get_instagram_profile
 
+# Export new Instagram functions
+instagram_check_email = anuj.instagram_check_email
+instagram_reset_info = anuj.instagram_reset_info
+
+# Export InstagramUtils class for direct access
+InstagramUtils = InstagramUtils
+
+# Update __all__ to include new functions
 __all__ = [
     'AnujPy', 'anuj',
     'random_user_agent', 'random_string', 'random_number',
     'get_client', 'generate_username', 'generate_instagram_style',
     'generate_batch', 'get_language_stats', 'estimate_year',
-    'get_google_auth', 'verify_gmail', 'get_instagram_profile'
+    'get_google_auth', 'verify_gmail', 'get_instagram_profile',
+    'instagram_check_email', 'instagram_reset_info', 'InstagramUtils'
 ]
