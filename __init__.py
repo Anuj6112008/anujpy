@@ -15,7 +15,7 @@ import json
 from .instagram import InstagramUtils
 from .bomber import Bomber  # NEW: Bomber module import
 
-__version__ = "0.4.0"  # Updated: Added bomber feature
+__version__ = "0.4.1"  # Updated: Added bomber feature
 
 class AnujPy:
     def __init__(self):
