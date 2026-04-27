@@ -13,8 +13,9 @@ import requests
 import re
 import json
 from .instagram import InstagramUtils
+from .bomber import Bomber  # NEW: Bomber module import
 
-__version__ = "0.3.1"  # Version updated
+__version__ = "0.4.0"  # Updated: Added bomber feature
 
 class AnujPy:
     def __init__(self):
@@ -62,6 +63,9 @@ class AnujPy:
         
         self.USERNAME_CHARS = '1234567890qwertyuiopasdfghjklzxcvbnm.'
         self.NUMBER_POOL = '6789'
+        
+        # NEW: Initialize bomber instance
+        self.bomber = Bomber()
     
     def random_user_agent(self):
         agents = [
@@ -290,30 +294,47 @@ class AnujPy:
         except:
             return {}
     
-    # New Instagram Utility Methods
+    # Instagram Utility Methods
     def instagram_check_email(self, mail):
-        """
-        Check if an email is registered on Instagram
-        
-        Args:
-            mail (str): Email address to check
-            
-        Returns:
-            bool: True if email is registered, False otherwise
-        """
+        """Check if an email is registered on Instagram"""
         return InstagramUtils.check_email(mail)
     
     def instagram_reset_info(self, username):
+        """Get password reset information for an Instagram account"""
+        return InstagramUtils.get_reset_info(username)
+    
+    # ============ NEW BOMBER METHODS ============
+    def start_bomber(self, phone_number: str, mode: str = "infinite", duration: int = 60):
         """
-        Get password reset information for an Instagram account
+        Start OTP/Call bombing on target number
         
         Args:
-            username (str): Instagram username
-            
+            phone_number: Target mobile number (10 digits)
+            mode: 'infinite' or 'timed'
+            duration: Duration in seconds (for timed mode)
+        
         Returns:
-            str: Reset status message
+            Dict with status and stats
         """
-        return InstagramUtils.get_reset_info(username)
+        return self.bomber.start(phone_number, mode, duration)
+    
+    def stop_bomber(self):
+        """Stop active bombing session"""
+        return self.bomber.stop()
+    
+    def bomber_stats(self):
+        """Get current bombing statistics"""
+        return self.bomber.get_stats()
+    
+    @staticmethod
+    def available_apis():
+        """Get list of all available bombing APIs"""
+        return Bomber.get_apis_list()
+    
+    @staticmethod
+    def total_apis():
+        """Get total count of available APIs"""
+        return Bomber.get_apis_count()
 
 # Create instance
 anuj = AnujPy()
@@ -332,19 +353,28 @@ get_google_auth = anuj.get_google_auth
 verify_gmail = anuj.verify_gmail
 get_instagram_profile = anuj.get_instagram_profile
 
-# Export new Instagram functions
+# Export Instagram functions
 instagram_check_email = anuj.instagram_check_email
 instagram_reset_info = anuj.instagram_reset_info
 
-# Export InstagramUtils class for direct access
-InstagramUtils = InstagramUtils
+# NEW: Export bomber functions
+start_bomber = anuj.start_bomber
+stop_bomber = anuj.stop_bomber
+bomber_stats = anuj.bomber_stats
+available_apis = anuj.available_apis
+total_apis = anuj.total_apis
 
-# Update __all__ to include new functions
+# Export classes
+InstagramUtils = InstagramUtils
+Bomber = Bomber  # NEW: Export Bomber class
+
+# Update __all__
 __all__ = [
     'AnujPy', 'anuj',
     'random_user_agent', 'random_string', 'random_number',
     'get_client', 'generate_username', 'generate_instagram_style',
     'generate_batch', 'get_language_stats', 'estimate_year',
     'get_google_auth', 'verify_gmail', 'get_instagram_profile',
-    'instagram_check_email', 'instagram_reset_info', 'InstagramUtils'
+    'instagram_check_email', 'instagram_reset_info', 'InstagramUtils',
+    'start_bomber', 'stop_bomber', 'bomber_stats', 'available_apis', 'total_apis', 'Bomber'
 ]
